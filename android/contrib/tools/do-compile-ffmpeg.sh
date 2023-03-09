@@ -323,17 +323,17 @@ FF_C_OBJ_FILES=
 FF_ASM_OBJ_FILES=
 for MODULE_DIR in $FF_MODULE_DIRS
 do
-    C_OBJ_FILES="$MODULE_DIR/*.a"
+    C_OBJ_FILES="$MODULE_DIR/*.o"
     if ls $C_OBJ_FILES 1> /dev/null 2>&1; then
-        echo "link $MODULE_DIR/*.a"
+        echo "link $MODULE_DIR/*.o"
         FF_C_OBJ_FILES="$FF_C_OBJ_FILES $C_OBJ_FILES"
     fi
 
     for ASM_SUB_DIR in $FF_ASSEMBLER_SUB_DIRS
     do
-        ASM_OBJ_FILES="$MODULE_DIR/$ASM_SUB_DIR/*.a"
+        ASM_OBJ_FILES="$MODULE_DIR/$ASM_SUB_DIR/*.o"
         if ls $ASM_OBJ_FILES 1> /dev/null 2>&1; then
-            echo "link $MODULE_DIR/$ASM_SUB_DIR/*.a"
+            echo "link $MODULE_DIR/$ASM_SUB_DIR/*.o"
             FF_ASM_OBJ_FILES="$FF_ASM_OBJ_FILES $ASM_OBJ_FILES"
         fi
     done
