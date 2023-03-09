@@ -219,13 +219,6 @@ export LD=${FF_CROSS_PREFIX}-ld
 export AR=${FF_CROSS_PREFIX}-ar
 export STRIP=${FF_CROSS_PREFIX}-strip
 
-FF_CFLAGS="-O3 -Wall -pipe \
-    -std=c99 \
-    -ffast-math \
-    -fstrict-aliasing -Werror=strict-aliasing \
-    -Wno-psabi -Wa,--noexecstack \
-    -DANDROID -DNDEBUG"
-
 # cause av_strlcpy crash with gcc4.7, gcc4.8
 # -fmodulo-sched -fmodulo-sched-allow-regmoves
 
@@ -314,7 +307,7 @@ echo "--------------------"
 echo "[*] compile ffmpeg"
 echo "--------------------"
 cp config.* $FF_PREFIX
-make $FF_MAKE_FLAGS > /dev/null
+make $FF_MAKE_FLAGS V=$NDK_LOG
 make install
 mkdir -p $FF_PREFIX/include/libffmpeg
 cp -f config.h $FF_PREFIX/include/libffmpeg/config.h
@@ -330,17 +323,17 @@ FF_C_OBJ_FILES=
 FF_ASM_OBJ_FILES=
 for MODULE_DIR in $FF_MODULE_DIRS
 do
-    C_OBJ_FILES="$MODULE_DIR/*.o"
+    C_OBJ_FILES="$MODULE_DIR/*.a"
     if ls $C_OBJ_FILES 1> /dev/null 2>&1; then
-        echo "link $MODULE_DIR/*.o"
+        echo "link $MODULE_DIR/*.a"
         FF_C_OBJ_FILES="$FF_C_OBJ_FILES $C_OBJ_FILES"
     fi
 
     for ASM_SUB_DIR in $FF_ASSEMBLER_SUB_DIRS
     do
-        ASM_OBJ_FILES="$MODULE_DIR/$ASM_SUB_DIR/*.o"
+        ASM_OBJ_FILES="$MODULE_DIR/$ASM_SUB_DIR/*.a"
         if ls $ASM_OBJ_FILES 1> /dev/null 2>&1; then
-            echo "link $MODULE_DIR/$ASM_SUB_DIR/*.o"
+            echo "link $MODULE_DIR/$ASM_SUB_DIR/*.a"
             FF_ASM_OBJ_FILES="$FF_ASM_OBJ_FILES $ASM_OBJ_FILES"
         fi
     done
