@@ -28,7 +28,7 @@ android {
     productFlavors {
         all32 {
             dimension "all32"
-            minSdkVersion 9
+            minSdkVersion 16
         }
         all64 {
             dimension "all64"
