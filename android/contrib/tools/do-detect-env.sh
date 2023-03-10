@@ -96,4 +96,7 @@ case "$UNAME_S" in
 
         echo "Cygwin temp prefix=$IJK_WIN_TEMP/"
     ;;
+    Linux)
+        export IJK_MAKE_FLAG=-j`getconf _NPROCESSORS_ONLN`
+    ;;
 esac
